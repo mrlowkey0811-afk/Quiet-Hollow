@@ -1,0 +1,27 @@
+/* ============================================================
+   THEME.CSS
+   Change colors here. Nothing else in the site needs to be touched.
+
+   "qh-" = the decoy site (Quiet Hollow)
+   "hc-" = the real site (The Hollow Choir)
+   All values are hex or rgba — swap freely.
+   ============================================================ */
+
+:root{
+  /* --- Decoy palette: Quiet Hollow --- */
+  --qh-bg: #ECEAE1;          /* page background */
+  --qh-bg-2: #E2E1D4;        /* secondary background (unused currently, spare) */
+  --qh-ink: #2B2E27;         /* main text color */
+  --qh-ink-soft: #5B5E52;    /* softer/secondary text */
+  --qh-accent: #45543F;      /* accent color (eyebrows, hover states) */
+  --qh-line: rgba(43,46,39,0.14);  /* hairline dividers */
+
+  /* --- Real palette: The Hollow Choir --- */
+  --hc-bg: #0A0A0C;          /* page background */
+  --hc-bg-2: #131316;        /* secondary background (unused currently, spare) */
+  --hc-bone: #E9E4DA;        /* main text / headline color */
+  --hc-bone-dim: #9C978D;    /* dimmer text (footer, small labels) */
+  --hc-accent: #8A1F3B;      /* the deep red accent (glyph, eyebrows, discord button) */
+  --hc-accent-2: #C9C2B3;    /* secondary text color (body copy, tagline) */
+  --hc-line: rgba(233,228,218,0.14); /* hairline dividers */
+}

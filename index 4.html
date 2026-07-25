@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiet Hollow — notes for slow living</title>
+<meta name="description" content="Quiet Hollow: tea notes, paper things, and small rituals for slow mornings.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+<!-- All colors live in colors.css — edit that file to reskin the site. -->
+<link rel="stylesheet" href="colors.css">
+
+<style>
+  /* Structure/layout only — colors all come from colors.css as CSS variables. */
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--qh-bg);
+    color:var(--qh-ink);
+    font-family:'Inter', sans-serif;
+    transition: background 0.6s ease, color 0.6s ease;
+    overflow-x:hidden;
+  }
+
+  .serif{ font-family:'Fraunces', serif; }
+
+  /* ============ DECOY SITE ============ */
+  #decoy{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 28px 120px;
+    transition: opacity 0.5s ease, filter 0.5s ease;
+  }
+
+  header.qh-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 40px 0 60px;
+    border-bottom: 1px solid var(--qh-line);
+  }
+  .qh-logo{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size: 1.3rem;
+    letter-spacing: 0.02em;
+  }
+  .qh-nav{
+    display:flex;
+    gap: 28px;
+    font-size: 0.88rem;
+    color: var(--qh-ink-soft);
+  }
+  .qh-nav a{ color:inherit; text-decoration:none; }
+  .qh-nav a:hover{ color:var(--qh-ink); }
+
+  .qh-hero{ padding: 64px 0 40px; }
+  .qh-hero h1{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:400;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    line-height:1.08;
+    margin: 0 0 22px;
+    max-width: 11ch;
+  }
+  .qh-hero p{
+    font-size: 1.05rem;
+    line-height:1.7;
+    color: var(--qh-ink-soft);
+    max-width: 46ch;
+    margin: 0 0 30px;
+  }
+  .qh-btn{
+    display:inline-block;
+    padding: 12px 22px;
+    border: 1px solid var(--qh-ink);
+    border-radius: 2px;
+    font-size: 0.85rem;
+    letter-spacing:0.03em;
+    color: var(--qh-ink);
+    text-decoration:none;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .qh-btn:hover{ background: var(--qh-ink); color: var(--qh-bg); }
+
+  .qh-divider{
+    height:1px;
+    background: var(--qh-line);
+    margin: 64px 0;
+    border:none;
+  }
+
+  .qh-journal{ padding-bottom: 20px; }
+  .qh-eyebrow{
+    font-size:0.78rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color: var(--qh-accent);
+    margin-bottom: 14px;
+  }
+  .qh-entry{
+    display:grid;
+    grid-template-columns: 110px 1fr;
+    gap: 22px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--qh-line);
+  }
+  .qh-entry:last-child{ border-bottom:none; }
+  .qh-date{ color: var(--qh-ink-soft); font-size:0.85rem; padding-top:4px; }
+  .qh-entry h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size: 1.15rem;
+    margin: 0 0 6px;
+  }
+  .qh-entry p{
+    margin:0;
+    color: var(--qh-ink-soft);
+    font-size:0.95rem;
+    line-height:1.6;
+  }
+
+  .qh-quote{
+    padding: 20px 0 10px;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size: 1.3rem;
+    line-height:1.5;
+    color: var(--qh-ink);
+    max-width: 40ch;
+  }
+
+  footer.qh-footer{
+    margin-top: 70px;
+    padding-top: 26px;
+    border-top: 1px solid var(--qh-line);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size: 0.82rem;
+    color: var(--qh-ink-soft);
+  }
+
+  /* the secret trigger — an ordinary-looking ornamental mark */
+  .qh-mark{
+    cursor: default;
+    color: var(--qh-ink-soft);
+    padding: 4px 8px;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: color 0.2s ease;
+  }
+  .qh-mark:hover{ color: var(--qh-accent); }
+  .qh-mark:focus-visible{
+    outline: 1px solid var(--qh-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ============ TRANSITION VEIL ============ */
+  #veil{
+    position: fixed;
+    inset: 0;
+    background: var(--hc-bg);
+    z-index: 500;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 0.7s ease;
+  }
+  #veil.show{ opacity:1; pointer-events:all; }
+  #veil span{
+    font-family:'UnifrakturCook', serif;
+    color: var(--hc-accent-2);
+    font-size: 2rem;
+    opacity:0;
+    transition: opacity 0.6s ease 0.2s;
+    letter-spacing:0.04em;
+  }
+  #veil.show span{ opacity:0.85; }
+
+  /* ============ REAL SITE: THE HOLLOW CHOIR ============ */
+  #choir{
+    display:none;
+    background: var(--hc-bg);
+    color: var(--hc-bone);
+    min-height:100vh;
+  }
+  body.revealed{ background: var(--hc-bg); }
+  body.revealed #decoy{ display:none; }
+  body.revealed #choir{ display:block; }
+
+  .hc-wrap{
+    max-width: 780px;
+    margin:0 auto;
+    padding: 0 28px 140px;
+  }
+
+  .hc-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 32px 0 0;
+  }
+  .hc-return{
+    font-size:0.78rem;
+    color: var(--hc-bone-dim);
+    text-decoration:none;
+    letter-spacing:0.03em;
+    border:1px solid var(--hc-line);
+    padding:8px 14px;
+    border-radius:2px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .hc-return:hover{ border-color: var(--hc-accent-2); color: var(--hc-bone); }
+
+  .hc-hero{
+    padding: 70px 0 30px;
+    text-align:center;
+    border-bottom: 1px solid var(--hc-line);
+  }
+  .hc-hero .glyph{
+    font-size: 1.8rem;
+    color: var(--hc-accent);
+    margin-bottom: 18px;
+    display:block;
+  }
+  .hc-hero h1{
+    font-family:'UnifrakturCook', serif;
+    font-weight:700;
+    font-size: clamp(2.6rem, 8vw, 4.4rem);
+    margin: 0 0 18px;
+    color: var(--hc-bone);
+    line-height:1.05;
+  }
+  .hc-hero p.tagline{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    color: var(--hc-accent-2);
+    font-size: 1.15rem;
+    max-width: 34ch;
+    margin: 0 auto 40px;
+    line-height:1.5;
+  }
+
+  .hc-section{
+    padding: 56px 0;
+    border-bottom: 1px solid var(--hc-line);
+  }
+  .hc-section:last-of-type{ border-bottom:none; }
+
+  .hc-eyebrow{
+    font-size:0.72rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color: var(--hc-accent);
+    margin-bottom: 16px;
+  }
+  .hc-section h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size: 1.8rem;
+    margin: 0 0 20px;
+    color: var(--hc-bone);
+  }
+  .hc-section p{
+    line-height:1.75;
+    color: var(--hc-accent-2);
+    font-size: 1rem;
+    max-width: 58ch;
+    margin: 0 0 16px;
+  }
+  .hc-section p:last-child{ margin-bottom:0; }
+
+  .hymnal{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset: verse;
+  }
+  .hymnal li{
+    counter-increment: verse;
+    position:relative;
+    padding: 18px 0 18px 54px;
+    border-top: 1px solid var(--hc-line);
+    color: var(--hc-accent-2);
+    line-height:1.6;
+  }
+  .hymnal li:first-child{ border-top:none; }
+  .hymnal li::before{
+    content: "Verse " counter(verse, upper-roman);
+    position:absolute;
+    left:0;
+    top:18px;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:0.78rem;
+    color: var(--hc-bone-dim);
+    width: 44px;
+  }
+  .hymnal strong{ color: var(--hc-bone); font-weight:500; }
+
+  .hc-join{
+    text-align:center;
+    padding: 60px 0 40px;
+  }
+  .hc-join p{ margin: 0 auto 28px; }
+  .discord-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background: var(--hc-accent);
+    color: var(--hc-bone);
+    text-decoration:none;
+    padding: 15px 30px;
+    border-radius: 3px;
+    font-size: 0.95rem;
+    letter-spacing:0.02em;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .discord-btn:hover{ background:#a4243f; transform: translateY(-1px); }
+  .discord-note{
+    margin-top:16px;
+    font-size:0.78rem;
+    color: var(--hc-bone-dim);
+  }
+
+  .hc-footer{
+    text-align:center;
+    padding-top: 50px;
+    font-size:0.78rem;
+    color: var(--hc-bone-dim);
+    letter-spacing:0.03em;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition-duration: 0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  @media (max-width: 600px){
+    .qh-entry{ grid-template-columns: 1fr; gap:6px; }
+    .qh-date{ padding-top:0; }
+    header.qh-header, .hc-header{ flex-direction:column; gap:14px; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ DECOY: Quiet Hollow ============ -->
+<!-- Text below is filled in from text.js -->
+<div id="decoy">
+  <header class="qh-header">
+    <div class="qh-logo" id="qh-logo"></div>
+    <nav class="qh-nav" id="qh-nav"></nav>
+  </header>
+
+  <section class="qh-hero">
+    <h1 class="serif" id="qh-hero-title"></h1>
+    <p id="qh-hero-text"></p>
+    <a class="qh-btn" href="#journal" id="qh-hero-btn"></a>
+  </section>
+
+  <hr class="qh-divider">
+
+  <section class="qh-journal" id="journal">
+    <div class="qh-eyebrow" id="qh-journal-eyebrow"></div>
+    <div id="qh-entries"></div>
+  </section>
+
+  <hr class="qh-divider">
+
+  <section id="about">
+    <div class="qh-eyebrow">About</div>
+    <p class="qh-quote serif" id="qh-quote"></p>
+  </section>
+
+  <footer class="qh-footer">
+    <span id="qh-footer-left"></span>
+    <span>
+      <span class="qh-mark" id="secretMark" role="button" tabindex="0" aria-label="ornamental mark">&#10022;</span>
+    </span>
+  </footer>
+</div>
+
+<!-- ============ TRANSITION VEIL ============ -->
+<div id="veil" aria-hidden="true">
+  <span>Amen.</span>
+</div>
+
+<!-- ============ REAL SITE: The Hollow Choir ============ -->
+<!-- Text below is filled in from text.js -->
+<div id="choir">
+  <div class="hc-wrap">
+    <div class="hc-header">
+      <a href="#" class="hc-return" id="returnLink">&larr; back to the hollow</a>
+      <span style="font-size:0.7rem; color:var(--hc-bone-dim); letter-spacing:0.1em;">ESC to vanish</span>
+    </div>
+
+    <section class="hc-hero">
+      <span class="glyph" id="hc-glyph"></span>
+      <h1 id="hc-title"></h1>
+      <p class="tagline" id="hc-tagline"></p>
+    </section>
+
+    <section class="hc-section" id="hc-about">
+      <div class="hc-eyebrow" id="hc-about-eyebrow"></div>
+      <h2 id="hc-about-title"></h2>
+      <div id="hc-about-paragraphs"></div>
+    </section>
+
+    <section class="hc-section">
+      <div class="hc-eyebrow" id="hc-rules-eyebrow"></div>
+      <h2 id="hc-rules-title"></h2>
+      <ol class="hymnal" id="hc-hymnal"></ol>
+    </section>
+
+    <section class="hc-join">
+      <div class="hc-eyebrow" id="hc-contact-eyebrow"></div>
+      <p id="hc-contact-text"></p>
+      <a class="discord-btn" id="hc-discord-btn" href="#" target="_blank" rel="noopener noreferrer"></a>
+      <div class="discord-note" id="hc-discord-note"></div>
+    </section>
+
+    <div class="hc-footer" id="hc-footer"></div>
+  </div>
+</div>
+
+<!-- All the site's words live in text.js -->
+<script src="text.js"></script>
+
+<script>
+  /* Renders the page using the content objects from text.js,
+     and handles the secret reveal/hide interaction. */
+  (function(){
+
+    /* ---------- render: decoy site ---------- */
+    document.getElementById('qh-logo').textContent = DECOY_CONTENT.siteName;
+
+    document.getElementById('qh-nav').innerHTML = DECOY_CONTENT.nav
+      .map(function(item){ return '<a href="#">' + item + '</a>'; })
+      .join('');
+
+    document.getElementById('qh-hero-title').textContent = DECOY_CONTENT.hero.title;
+    document.getElementById('qh-hero-text').textContent = DECOY_CONTENT.hero.text;
+    document.getElementById('qh-hero-btn').textContent = DECOY_CONTENT.hero.buttonText;
+
+    document.getElementById('qh-journal-eyebrow').textContent = DECOY_CONTENT.journalEyebrow;
+
+    document.getElementById('qh-entries').innerHTML = DECOY_CONTENT.entries.map(function(e){
+      return '<div class="qh-entry">' +
+               '<div class="qh-date">' + e.date + '</div>' +
+               '<div>' +
+                 '<h3 class="serif">' + e.title + '</h3>' +
+                 '<p>' + e.text + '</p>' +
+               '</div>' +
+             '</div>';
+    }).join('');
+
+    document.getElementById('qh-quote').textContent = '"' + DECOY_CONTENT.aboutQuote + '"';
+    document.getElementById('qh-footer-left').textContent = DECOY_CONTENT.footerLeft;
+
+    /* ---------- render: real site — hero / identity ---------- */
+    document.getElementById('hc-glyph').textContent = ABOUT_CONTENT.glyph;
+    document.getElementById('hc-title').textContent = ABOUT_CONTENT.siteName;
+    document.getElementById('hc-tagline').textContent = ABOUT_CONTENT.tagline;
+
+    /* ---------- render: real site — about ---------- */
+    document.getElementById('hc-about-eyebrow').textContent = ABOUT_CONTENT.eyebrow;
+    document.getElementById('hc-about-title').textContent = ABOUT_CONTENT.title;
+    document.getElementById('hc-about-paragraphs').innerHTML = ABOUT_CONTENT.paragraphs
+      .map(function(p){ return '<p>' + p + '</p>'; })
+      .join('');
+
+    /* ---------- render: real site — rules / hymnal ---------- */
+    document.getElementById('hc-rules-eyebrow').textContent = RULES_CONTENT.eyebrow;
+    document.getElementById('hc-rules-title').textContent = RULES_CONTENT.title;
+    document.getElementById('hc-hymnal').innerHTML = RULES_CONTENT.verses.map(function(v){
+      return '<li><strong>' + v.bold + '</strong> ' + v.text + '</li>';
+    }).join('');
+
+    /* ---------- render: real site — contact / discord ---------- */
+    document.getElementById('hc-contact-eyebrow').textContent = CONTACT_CONTENT.eyebrow;
+    document.getElementById('hc-contact-text').textContent = CONTACT_CONTENT.text;
+    document.getElementById('hc-discord-btn').textContent = CONTACT_CONTENT.buttonText;
+    document.getElementById('hc-discord-btn').href = CONTACT_CONTENT.discordUrl;
+    document.getElementById('hc-discord-note').textContent = CONTACT_CONTENT.note;
+    document.getElementById('hc-footer').textContent = CONTACT_CONTENT.footerText;
+
+    /* ---------- interaction: reveal / hide ---------- */
+    var mark = document.getElementById('secretMark');
+    var veil = document.getElementById('veil');
+    var body = document.body;
+    var returnLink = document.getElementById('returnLink');
+
+    function reveal(){
+      veil.classList.add('show');
+      setTimeout(function(){
+        body.classList.add('revealed');
+        window.scrollTo(0,0);
+      }, 550);
+      setTimeout(function(){
+        veil.classList.remove('show');
+      }, 1300);
+    }
+
+    function hide(){
+      body.classList.remove('revealed');
+      window.scrollTo(0,0);
+    }
+
+    mark.addEventListener('click', reveal);
+    mark.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        reveal();
+      }
+    });
+
+    returnLink.addEventListener('click', function(e){
+      e.preventDefault();
+      hide();
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && body.classList.contains('revealed')){
+        hide();
+      }
+    });
+
+  })();
+</script>
+
+</body>
+</html>
