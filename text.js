@@ -12,7 +12,7 @@
    ============================================================ */
 const DECOY_CONTENT = {
 
-  siteName: "Quiet Hollow test text",
+  siteName: "Quiet Hollow",
 
   nav: ["Journal", "About", "Shop"],
 
@@ -116,9 +116,24 @@ const CONTACT_CONTENT = {
   buttonText: "Enter the Discord →",
 
   // 👇 Replace this with your real Discord invite link before publishing.
-  discordUrl: "https://discord.gg/YOUR-INVITE-CODE",
+  discordUrl: "https://discord.gg/UFX84CHTjv",
 
   note: "Replace this link with your real invite before publishing.",
 
   footerText: "the hollow choir · est. whenever it stops being funny, so: never"
+};
+/* ============================================================
+   SECTION 5: SAYINGS
+   ============================================================ */
+const SAYINGS_CONTENT = {
+
+  eyebrow: "Sayings",
+  title: "Things We Actually Believe",
+
+  // Add or remove lines freely.
+  sayings: [
+    "If she leaves you for another there is always her mother",
+    "We didn't choose the bit. The bit chose us.",
+    "Nobody's coming to save you, but at least the group chat's funny."
+  ]
 };
