@@ -12,7 +12,7 @@
    ============================================================ */
 const DECOY_CONTENT = {
 
-  siteName: "Quiet Hollow",
+  siteName: "Quiet Hollow test text",
 
   nav: ["Journal", "About", "Shop"],
 
